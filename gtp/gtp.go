@@ -3,6 +3,7 @@ package gtp
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"github.com/869413421/wechatbot/config"
 	"io/ioutil"
 	"log"
@@ -19,6 +20,8 @@ type ChatGPTResponseBody struct {
 	Model   string                   `json:"model"`
 	Choices []map[string]interface{} `json:"choices"`
 	Usage   map[string]interface{}   `json:"usage"`
+	// 错误处理
+	Error   map[string]interface{}   `json:"error"`
 }
 
 type ChoiceItem struct {
@@ -82,6 +85,16 @@ func Completions(msg string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
+	// 错误返回
+	if len(gptResponseBody.Error) > 0 {
+		if message, ok := gptResponseBody.Error["message"]; ok {
+			return "", errors.New(message.(string))
+		} else {
+			return "", errors.New("ChatGPT server error")
+		}
+	}
+
 	var reply string
 	if len(gptResponseBody.Choices) > 0 {
 		for _, v := range gptResponseBody.Choices {

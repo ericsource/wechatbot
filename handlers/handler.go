@@ -4,6 +4,7 @@ import (
 	"github.com/869413421/wechatbot/config"
 	"github.com/eatmoreapple/openwechat"
 	"log"
+	"time"
 )
 
 // MessageHandlerInterface 消息处理接口
@@ -30,12 +31,7 @@ func init() {
 
 // Handler 全局处理入口
 func Handler(msg *openwechat.Message) {
-	log.Printf("hadler Received msg : %v", msg.Content)
-	// 处理群消息
-	if msg.IsSendByGroup() {
-		handlers[GroupHandler].handle(msg)
-		return
-	}
+	//log.Printf("hadler Received msg : %v", msg.Content)
 
 	// 好友申请
 	if msg.IsFriendAdd() {
@@ -48,6 +44,40 @@ func Handler(msg *openwechat.Message) {
 		}
 	}
 
-	// 私聊
-	handlers[UserHandler].handle(msg)
+	// 判断是否自己发送
+	if msg.IsSendBySelf() {
+		return
+	}
+
+	// 空消息处理
+	if msg.Content == "" {
+		log.Println("msg content empty")
+		return
+	}
+
+	//fmt.Println("create time:", msg.CreateTime, msg., time.Now().Unix())
+	// 旧内容不要处理
+	if (time.Now().Unix() - msg.CreateTime > 5) {
+		return
+	}
+
+	// 处理群消息
+	if msg.IsSendByGroup() {
+		handlers[GroupHandler].handle(msg)
+		return
+	}
+
+	// 私聊文本
+	if msg.IsText() {
+		handlers[UserHandler].handle(msg)
+		return
+	}
+
+	// 私聊图片 todo
+	if msg.IsPicture() {
+		//handlers[UserHandler].handle(msg)
+		return
+	}
+
+	return
 }
