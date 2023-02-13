@@ -13,6 +13,11 @@ type Configuration struct {
 	ApiKey string `json:"api_key"`
 	// 自动通过好友
 	AutoPass bool `json:"auto_pass"`
+
+	// telegram 代理
+	TelegramProxy string `json:"telegram_proxy"`
+	// telegram token
+	TelegramToken string `json:"telegram_token"`
 }
 
 var config *Configuration
@@ -44,6 +49,16 @@ func LoadConfig() *Configuration {
 		}
 		if AutoPass == "true" {
 			config.AutoPass = true
+		}
+
+		//telegram
+		TelegramProxy := os.Getenv("TelegramProxy")
+		TelegramToken := os.Getenv("TelegramToken")
+		if TelegramProxy != "" {
+			config.TelegramProxy =  TelegramProxy
+		}
+		if TelegramToken != "" {
+			config.TelegramToken = TelegramToken
 		}
 	})
 	return config

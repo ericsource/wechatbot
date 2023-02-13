@@ -7,6 +7,7 @@ import (
 	"github.com/869413421/wechatbot/config"
 	"io/ioutil"
 	"log"
+	"io"
 	"net/http"
 )
 
@@ -104,4 +105,81 @@ func Completions(msg string) (string, error) {
 	}
 	log.Printf("gpt response text: %s \n", reply)
 	return reply, nil
+}
+
+
+// ImageGenerationRequestBody 图片响应体
+type ImageGenerationRequestBody struct {
+	Prompt           string  `json:"prompt"`
+	N        		 int     `json:"n"`
+	Size      		 string `json:"size"`
+}
+// ImageGenerationResponseBody 请求体
+type ImageGenerationResponseBody struct {
+	Created int                      `json:"created"`
+	Data []map[string]interface{} 	 `json:"data"`
+	// 错误处理
+	Error   map[string]interface{}   `json:"error"`
+}
+func ImagesGenerations(prompt string) (file io.Reader, err error) {
+	requestBody := ImageGenerationRequestBody{
+		Prompt:           prompt,
+		N: 				  1,
+		Size: 			  "512x512",
+	}
+	requestData, err := json.Marshal(requestBody)
+	if err != nil {
+		return nil, err
+	}
+	log.Printf("request gtp json string : %v", string(requestData))
+	req, err := http.NewRequest("POST", BASEURL+"images/generations", bytes.NewBuffer(requestData))
+	if err != nil {
+		return nil, err
+	}
+
+	apiKey := config.LoadConfig().ApiKey
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+apiKey)
+	client := &http.Client{}
+	response, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	gptResponseBody := &ChatGPTResponseBody{}
+	log.Println(string(body))
+	err = json.Unmarshal(body, gptResponseBody)
+	if err != nil {
+		return nil, err
+	}
+
+	// 错误返回
+	if len(gptResponseBody.Error) > 0 {
+		if message, ok := gptResponseBody.Error["message"]; ok {
+			return nil, errors.New(message.(string))
+		} else {
+			return nil, errors.New("ChatGPT server error")
+		}
+	}
+
+	var url string
+	if len(gptResponseBody.Choices) > 0 {
+		for _, v := range gptResponseBody.Choices {
+			url = v["url"].(string)
+			break
+		}
+	}
+	log.Printf("gpt response url: %s \n", url)
+	urlRes, err := http.Get(url)
+	if err != nil{
+		return nil, err
+	}
+
+	return urlRes.Body, nil
 }
