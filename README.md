@@ -28,6 +28,11 @@ copy config.dev.json config.json
 go run main.go
 
 启动前需替换config中的api_key
+
+# teltgram 配置文件
+"telegram_proxy": "sock5://127.0.0.1:7890",
+"telegram_token": ""
+
 ```
 
 # 打包
