@@ -43,3 +43,9 @@ go run telegram.go
 ```
 ./build.sh
 ```
+
+# 运行
+```
+nohup ./restart.sh >/dev/null 2>log &
+```
+

@@ -8,7 +8,8 @@ cd "/home/eric.cai/wechatbot/bin"
 
 echo "Current DIR is " $PWD
 
-stillRunning=$(ps -ef |grep "$PWD/wechatbot-386-linux" |grep -v "grep")
+#stillRunning=$(ps -ef |grep "$PWD/wechatbot-386-linux" |grep -v "grep")
+stillRunning=$(ps -ef |grep "$PWD/telegram-amd64-linux" |grep -v "grep")
 
 if [ "$stillRunning" ] ; then
 
@@ -23,7 +24,8 @@ echo "TWS service was not started"
 
 echo "Starting service ..."
 
-nohup $PWD/wechatbot-386-linux >chat.log 2>&1 &
+#nohup $PWD/wechatbot-386-linux >chat.log 2>&1 &
+nohup $PWD/telegram-amd64-linux >telegram.log 2>&1 &
 
 echo "TWS service was exited!"
 
