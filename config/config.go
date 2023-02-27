@@ -18,6 +18,10 @@ type Configuration struct {
 	TelegramProxy string `json:"telegram_proxy"`
 	// telegram token
 	TelegramToken string `json:"telegram_token"`
+
+	// template
+	HealTemplate string `json:"heal_template"`
+	PromptTemplate string `json:"prompt_template"`
 }
 
 var config *Configuration
@@ -60,6 +64,17 @@ func LoadConfig() *Configuration {
 		if TelegramToken != "" {
 			config.TelegramToken = TelegramToken
 		}
+
+		//template
+		HealTemplate := os.Getenv("HealTemplate")
+		PromptTemplate := os.Getenv("PromptTemplate")
+		if HealTemplate != "" {
+			config.HealTemplate = HealTemplate
+		}
+		if PromptTemplate != "" {
+			config.PromptTemplate = PromptTemplate
+		}
+
 	})
 	return config
 }
