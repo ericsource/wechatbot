@@ -38,6 +38,11 @@ go run telegram.go
 
 ```
 
+# 测试代码
+```
+curl --socks5 127.0.0.1:1080 http://httpbin.org/ip
+```
+
 # 打包
 
 ```
