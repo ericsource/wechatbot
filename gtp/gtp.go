@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/869413421/wechatbot/config"
+	"io"
 	"io/ioutil"
 	"log"
-	"io"
 	"net/http"
 )
 
@@ -182,4 +182,100 @@ func ImagesGenerations(prompt string) (file io.Reader, err error) {
 	}
 
 	return urlRes.Body, nil
+}
+
+// ChatConversationMessage
+type ChatConversationMessage struct {
+	Role string `json:"role"`
+	Content string `json:"content"`
+}
+
+// ChatConversationRequestBody 响应体
+type ChatConversationRequestBody struct {
+	Model           string  `json:"model"`
+	Messages  		[]ChatConversationMessage `json:"messages"`
+}
+
+// ChatConversationResponseBody 请求体
+type ChatConversationResponseBody struct {
+	ID      string                   `json:"id"`
+	Object  string                   `json:"object"`
+	Created int                      `json:"created"`
+	Model   string                   `json:"model"`
+	Choices []struct{
+		Index		int `json:"index"`
+		Message		ChatConversationMessage `json:"message"`
+	} 								`json:"choices"`
+	Usage   map[string]interface{}   `json:"usage"`
+	// 错误处理
+	Error   map[string]interface{}   `json:"error"`
+}
+
+// Completions gtp文本模型回复
+//curl https://api.openai.com/v1/chat/completions \
+//-H 'Content-Type: application/json' \
+//-H 'Authorization: Bearer YOUR_API_KEY' \
+//-d '{
+//"model": "gpt-3.5-turbo",
+//"messages": [{"role": "user", "content": "Hello!"}]
+//}'
+func ChatCompletions(msg string) (string, error) {
+	requestBody := ChatConversationRequestBody{
+		Model:            "gpt-3.5-turbo",
+	}
+	requestBody.Messages = append(requestBody.Messages, ChatConversationMessage{
+		Role: "user",
+		Content: msg,
+	})
+	requestData, err := json.Marshal(requestBody)
+
+	if err != nil {
+		return "", err
+	}
+	log.Printf("request gtp json string : %v", string(requestData))
+	req, err := http.NewRequest("POST", BASEURL+"chat/completions", bytes.NewBuffer(requestData))
+	if err != nil {
+		return "", err
+	}
+
+	apiKey := config.LoadConfig().ApiKey
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+apiKey)
+	client := &http.Client{}
+	response, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer response.Body.Close()
+
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return "", err
+	}
+
+	gptResponseBody := &ChatConversationResponseBody{}
+	log.Println(string(body))
+	err = json.Unmarshal(body, gptResponseBody)
+	if err != nil {
+		return "", err
+	}
+
+	// 错误返回
+	if len(gptResponseBody.Error) > 0 {
+		if message, ok := gptResponseBody.Error["message"]; ok {
+			return "", errors.New(message.(string))
+		} else {
+			return "", errors.New("ChatGPT server error")
+		}
+	}
+
+	var reply string
+	if len(gptResponseBody.Choices) > 0 {
+		for _, v := range gptResponseBody.Choices {
+			reply = v.Message.Content
+			break
+		}
+	}
+	log.Printf("gpt response text: %s \n", reply)
+	return reply, nil
 }

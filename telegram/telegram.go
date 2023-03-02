@@ -53,7 +53,8 @@ func Run() {
 						requestText = "你好"
 					}
 
-					reply, err := gtp.Completions(requestText)
+					//reply, err := gtp.Completions(requestText)
+					reply, err := gtp.ChatCompletions(requestText)
 					if err != nil {
 						log.Printf("gtp request error: %v \n", err)
 						reply = "机器人傻了，请再试一试。"
