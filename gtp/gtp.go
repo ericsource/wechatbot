@@ -2,13 +2,16 @@ package gtp
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/869413421/wechatbot/config"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 )
 
 const BASEURL = "https://api.openai.com/v1/"
@@ -233,6 +236,7 @@ func ChatCompletions(msg string) (string, error) {
 		return "", err
 	}
 	log.Printf("request gtp json string : %v", string(requestData))
+
 	req, err := http.NewRequest("POST", BASEURL+"chat/completions", bytes.NewBuffer(requestData))
 	if err != nil {
 		return "", err
@@ -241,8 +245,26 @@ func ChatCompletions(msg string) (string, error) {
 	apiKey := config.LoadConfig().ApiKey
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+apiKey)
-	client := &http.Client{}
-	response, err := client.Do(req)
+
+	proxyClient := &http.Client{}
+	telegramProxy := config.LoadConfig().TelegramProxy
+	if telegramProxy != "" {
+		// 设置代理http或sock5
+		proxyUrl, err := url.Parse(telegramProxy)
+		if err != nil {
+			return "url.Parse err:", err
+		}
+
+		fmt.Println("proxy:", proxyUrl)
+		transport := &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+			//使用代理
+			Proxy: http.ProxyURL(proxyUrl),
+		}
+		proxyClient = &http.Client{Transport: transport}
+	}
+
+	response, err := proxyClient.Do(req)
 	if err != nil {
 		return "", err
 	}

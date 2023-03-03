@@ -15,7 +15,7 @@ import (
 func Run() {
 	// 设置代理http或sock5
 	proxyUrl, err := url.Parse(config.LoadConfig().TelegramProxy)
-	fmt.Println("proxy2:", proxyUrl)
+	fmt.Println("proxy:", proxyUrl)
 	transport := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		//使用代理

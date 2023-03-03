@@ -20,4 +20,4 @@
 GOOS=linux GOARCH=amd64 go build -o bin/telegram-amd64-linux telegram.go
 
 # poetry
-GOOS=linux GOARCH=amd64 go build -o bin/peotry-amd64-linux peotry.go
+#GOOS=linux GOARCH=amd64 go build -o bin/peotry-amd64-linux peotry.go
