@@ -224,7 +224,7 @@ type ChatConversationResponseBody struct {
 //}'
 func ChatCompletions(msg string) (string, error) {
 	requestBody := ChatConversationRequestBody{
-		Model:            "gpt-3.5-turbo",
+		Model: "gpt-3.5-turbo",
 	}
 	requestBody.Messages = append(requestBody.Messages, ChatConversationMessage{
 		Role: "user",

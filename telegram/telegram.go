@@ -39,6 +39,8 @@ func Run() {
 
 	updates := bot.GetUpdatesChan(u)
 
+	fmt.Println("-------------------------------------------")
+
 	for update := range updates {
 		// group
 		if update.Message.Chat.IsGroup() {
@@ -77,7 +79,7 @@ func Run() {
 				// 向GPT发起请求
 				requestText := strings.TrimSpace(update.Message.Text)
 				requestText = strings.Trim(update.Message.Text, "\n")
-				reply, err := gtp.Completions(requestText)
+				reply, err := gtp.ChatCompletions(requestText)
 				if err != nil {
 					log.Printf("gtp request error: %v \n", err)
 					reply = "机器人傻了，请再试一试。"
