@@ -11,6 +11,8 @@ config.json
 # Test binary, built with `go test -c`
 *.test
 /test.go
+/weixin_kf.go
+/official_account.go
 /demo.go
 /*_demo.go
 

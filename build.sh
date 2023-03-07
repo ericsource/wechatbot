@@ -17,7 +17,10 @@
 #GOOS=darwin GOARCH=386 go build -o bin/wechatbot-386-darwin main.go
 
 # telegram
-GOOS=linux GOARCH=amd64 go build -o bin/telegram-amd64-linux telegram.go
+#GOOS=linux GOARCH=amd64 go build -o bin/telegram-amd64-linux telegram.go
 
 # poetry
-GOOS=linux GOARCH=amd64 go build -o bin/poetry-amd64-linux poetry.go
+#GOOS=linux GOARCH=amd64 go build -o bin/poetry-amd64-linux poetry.go
+
+# weixin officialAccount
+GOOS=linux GOARCH=amd64 go build -o bin/official-account-amd64-linux official_account.go
