@@ -3,5 +3,10 @@
   "auto_pass": true,
 
   "telegram_proxy": "sock5://127.0.0.1:7890",
-  "telegram_token": ""
+  "telegram_token": "",
+
+  "official_app_id": "",
+  "official_app_secret": "",
+  "official_token": "",
+  "official_encoding_aes_key": ""
 }
