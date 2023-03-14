@@ -20,8 +20,14 @@ type Configuration struct {
 	TelegramToken string `json:"telegram_token"`
 
 	// template
-	HealTemplate string `json:"heal_template"`
+	HealTemplate   string `json:"heal_template"`
 	PromptTemplate string `json:"prompt_template"`
+
+	// official account
+	AppID          string `json:"app_id"`
+	AppSecret      string `json:"app_secret"`
+	Token          string `json:"token"`
+	EncodingAESKey string `json:"encoding_aes_key"`
 }
 
 var config *Configuration
@@ -59,13 +65,13 @@ func LoadConfig() *Configuration {
 		TelegramProxy := os.Getenv("TelegramProxy")
 		TelegramToken := os.Getenv("TelegramToken")
 		if TelegramProxy != "" {
-			config.TelegramProxy =  TelegramProxy
+			config.TelegramProxy = TelegramProxy
 		}
 		if TelegramToken != "" {
 			config.TelegramToken = TelegramToken
 		}
 
-		//template
+		// heal
 		HealTemplate := os.Getenv("HealTemplate")
 		PromptTemplate := os.Getenv("PromptTemplate")
 		if HealTemplate != "" {
@@ -74,6 +80,16 @@ func LoadConfig() *Configuration {
 		if PromptTemplate != "" {
 			config.PromptTemplate = PromptTemplate
 		}
+
+		// official account
+		AppID := os.Getenv("AppID")
+		AppSecret := os.Getenv("AppSecret")
+		Token := os.Getenv("Token")
+		EncodingAESKey := os.Getenv("EncodingAESKey")
+		config.AppID = AppID
+		config.AppSecret = AppSecret
+		config.Token = Token
+		config.EncodingAESKey = EncodingAESKey
 
 	})
 	return config

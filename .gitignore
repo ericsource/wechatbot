@@ -12,7 +12,6 @@ config.json
 *.test
 /test.go
 /weixin_kf.go
-/official_account.go
 /demo.go
 /*_demo.go
 
