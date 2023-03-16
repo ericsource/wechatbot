@@ -37,6 +37,12 @@ go run main.go
 # 启动telegram
 go run telegram.go
 
+# 下载 official-account-amd64-linux 或 telegram-amd64-linux (目前只支持linux)
+1. 添加config.json文件
+2. 执行
+./official-account-amd64-linux
+./telegram-amd64-linux
+
 ```
 
 # 代理测试代码
