@@ -59,5 +59,9 @@ curl --socks5 127.0.0.1:1080 http://httpbin.org/ip
 # 运行
 ```
 nohup ./restart.sh >/dev/null 2>log &
+
+./official-account-amd64-linux
+
+./telegram-amd64-linux
 ```
 
