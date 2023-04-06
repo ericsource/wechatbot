@@ -5,3 +5,7 @@ https://github.com/rany2/edge-tts
 ```bash
 pip install edge-tts
 ```
+
+```bash
+edge-tts --text "Hello, world!" --write-media hello.mp3
+```
