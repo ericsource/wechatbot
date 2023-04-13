@@ -8,4 +8,6 @@ pip install edge-tts
 
 ```bash
 edge-tts --text "Hello, world!" --write-media hello.mp3
+
+edge-tts --voice ar-EG-SalmaNeural --text "Hello, world!" --write-media hello_in_arabic.mp3
 ```
