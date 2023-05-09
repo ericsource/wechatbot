@@ -4,6 +4,7 @@ https://github.com/rany2/edge-tts
 #### 安装
 ```bash
 pip install edge-tts
+go mod tidy
 ```
 
 ```bash
@@ -14,4 +15,12 @@ edge-tts --voice ar-EG-SalmaNeural --text "Hello, world!" --write-media hello_in
 edge-tts --list-voices
 
 edge-tts --volume=-50% --text "Hello, world!" --write-media hello_with_volume_halved.mp3
+```
+
+```json
+edge-tts --list-voices
+Name: Microsoft Server Speech Text to Speech Voice (af-ZA, AdriNeural)
+ShortName: af-ZA-AdriNeural
+Gender: Female
+Locale: af-ZA
 ```
