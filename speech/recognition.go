@@ -7,7 +7,12 @@ import (
 
 	"github.com/Microsoft/cognitive-services-speech-sdk-go/audio"
 	"github.com/Microsoft/cognitive-services-speech-sdk-go/speech"
+	"github.com/Microsoft/cognitive-services-speech-sdk-go/video"
 )
+
+func test() {
+	video.test()
+}
 
 func sessionStartedHandler(event speech.SessionEventArgs) {
 	defer event.Close()
