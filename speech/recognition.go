@@ -12,6 +12,7 @@ import (
 
 func test() {
 	video.test()
+	video.play()
 }
 
 func sessionStartedHandler(event speech.SessionEventArgs) {
