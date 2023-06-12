@@ -23,4 +23,9 @@ Name: Microsoft Server Speech Text to Speech Voice (af-ZA, AdriNeural)
 ShortName: af-ZA-AdriNeural
 Gender: Female
 Locale: af-ZA
+
+Name: Microsoft Server Speech Text to Speech Voice (am-ET, MekdesNeural)
+ShortName: am-ET-MekdesNeural
+Gender: Female
+Locale: am-ET
 ```
