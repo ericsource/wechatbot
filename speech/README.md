@@ -28,4 +28,6 @@ Name: Microsoft Server Speech Text to Speech Voice (am-ET, MekdesNeural)
 ShortName: am-ET-MekdesNeural
 Gender: Female
 Locale: am-ET
+
+edge-tts --voice ar-EG-SalmaNeural --text "مرحبا كيف حالك؟" --write-media hello_in_arabic.mp3 --write-subtitles hello_in_arabic.vtt
 ```
