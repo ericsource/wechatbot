@@ -3,9 +3,11 @@ module github.com/869413421/wechatbot
 go 1.18
 
 require (
+	github.com/Microsoft/cognitive-services-speech-sdk-go v1.29.0
 	github.com/eatmoreapple/openwechat v1.3.8
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.5.1
+	github.com/google/uuid v1.3.0
 	github.com/sbzhu/weworkapi_golang v0.0.0-20210525081115-1799804a7c8d
 	github.com/silenceper/wechat/v2 v2.1.4
 )

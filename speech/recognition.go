@@ -7,12 +7,11 @@ import (
 
 	"github.com/Microsoft/cognitive-services-speech-sdk-go/audio"
 	"github.com/Microsoft/cognitive-services-speech-sdk-go/speech"
-	"github.com/Microsoft/cognitive-services-speech-sdk-go/video"
 )
 
 func test() {
-	video.test()
-	video.play()
+	//video.test()
+	//video.play()
 }
 
 func sessionStartedHandler(event speech.SessionEventArgs) {
@@ -35,11 +34,11 @@ func recognizedHandler(event speech.SpeechRecognitionEventArgs) {
 	fmt.Println("Recognized:", event.Result.Text)
 }
 
-func cancelledHandler(event speech.SpeechRecognitionCanceledEventArgs) {
-	defer event.Close()
-	fmt.Println("Received a cancellation: ", event.ErrorDetails)
-	fmt.Println("Did you set the speech resource key and region values?")
-}
+//func cancelledHandler(event speech.SpeechRecognitionCanceledEventArgs) {
+//	defer event.Close()
+//	fmt.Println("Received a cancellation: ", event.ErrorDetails)
+//	fmt.Println("Did you set the speech resource key and region values?")
+//}
 
 func main() {
 	// This example requires environment variables named "SPEECH_KEY" and "SPEECH_REGION"
@@ -68,7 +67,7 @@ func main() {
 	speechRecognizer.SessionStopped(sessionStoppedHandler)
 	speechRecognizer.Recognizing(recognizingHandler)
 	speechRecognizer.Recognized(recognizedHandler)
-	speechRecognizer.Canceled(cancelledHandler)
+	//speechRecognizer.Canceled(cancelledHandler)
 	speechRecognizer.StartContinuousRecognitionAsync()
 	defer speechRecognizer.StopContinuousRecognitionAsync()
 	bufio.NewReader(os.Stdin).ReadBytes('\n')
