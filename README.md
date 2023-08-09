@@ -10,6 +10,7 @@ https://github.com/djun/wechatbot
  + 回复心跳（但还是会出现微信退出，openwechat文档有说需要两微信相互发消息才不会退出）
  + 添加telegram接入
  + 添加公众号接入
+ + 添加小程序接入
  
 # 注册openai
 chatGPT注册可以参考[这里](https://juejin.cn/post/7173447848292253704)
