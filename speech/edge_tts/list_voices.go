@@ -31,7 +31,7 @@ func NewListVoices(proxy string) (*ListVoices, error) {
 	client := &http.Client{}
 
 	// 创建一个新的 HTTP 请求
-	req, err := http.NewRequest("GET", VoiceList, nil)
+	req, err := http.NewRequest("GET", VOICE_LIST, nil)
 	if err != nil {
 		fmt.Println("创建请求失败:", err)
 		return nil, err
@@ -79,8 +79,13 @@ func NewListVoices(proxy string) (*ListVoices, error) {
 	return listVoices, nil
 }
 
-// find Gender="Male", Language="es"
+// find Gender="Male/Female", Language="es"
 func (l *ListVoices) Find(gender, language string) []Voice {
+	if l == nil {
+		return []Voice{}
+	}
+
+	gender = strings.Title(gender)
 	voices := []Voice{}
 	// 遍历原始字符串切片，进行过滤和提取
 	for _, voice := range l.Voices {
