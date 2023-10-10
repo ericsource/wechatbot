@@ -8,6 +8,10 @@ go mod tidy
 ```
 
 ```bash
+import "github.com/869413421/wechatbot/speech/edge_tts"
+```
+
+```bash
 edge-tts --text "Hello, world!" --write-media hello.mp3
 
 edge-tts --voice ar-EG-SalmaNeural --text "Hello, world!" --write-media hello_in_arabic.mp3
