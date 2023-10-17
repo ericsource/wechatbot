@@ -1,6 +1,8 @@
 #### 接入
 https://github.com/rany2/edge-tts
 
+https://github.com/ericsource/tts-go
+
 #### 安装
 ```bash
 pip install edge-tts
