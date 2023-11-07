@@ -1,6 +1,4 @@
 #### 接入
-https://github.com/rany2/edge-tts
-
 https://github.com/ericsource/tts-go
 
 #### 安装
@@ -10,7 +8,7 @@ go mod tidy
 ```
 
 ```bash
-import "github.com/869413421/wechatbot/speech/edge_tts"
+import "github.com/ericsource/tts-go/src/edge_tts"
 ```
 
 ```bash
