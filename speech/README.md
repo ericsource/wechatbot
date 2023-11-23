@@ -35,3 +35,12 @@ Locale: am-ET
 
 edge-tts --voice ar-EG-SalmaNeural --text "مرحبا كيف حالك؟" --write-media hello_in_arabic.mp3 --write-subtitles hello_in_arabic.vtt
 ```
+
+```go
+package main
+
+import "github.com/ericsource/tts-go/src/edge_tts"
+
+func main() {
+}
+```
