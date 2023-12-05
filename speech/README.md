@@ -39,8 +39,15 @@ edge-tts --voice ar-EG-SalmaNeural --text "مرحبا كيف حالك؟" --write
 ```go
 package main
 
-import "github.com/ericsource/tts-go/src/edge_tts"
+import (
+	"context"
+	"fmt"
+	"github.com/ericsource/tts-go/src/azure_tts"
+	"github.com/spf13/pflag"
+	"os"
+)
 
 func main() {
+
 }
 ```
