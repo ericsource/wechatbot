@@ -56,5 +56,6 @@ func usage() {
 func main() {
 	listVoices := pflag.BoolP("list-voices", "l", false, "lists available voices and exits")
 	locale := pflag.StringP("locale", "", "en-US", "locale for voice lists ex: zh-CN, en-US")
+	gender := pflag.StringP("gender", "", "", "gender for voice lists ex: Male, Female")
 }
 ```
